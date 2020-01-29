@@ -118,6 +118,7 @@ struct stats {
     unsigned m_bound_propagations2;
     unsigned m_assert_diseq;
     unsigned m_gomory_cuts;
+    unsigned m_branches;
     unsigned m_nla_explanations;
     unsigned m_nla_lemmas;
     unsigned m_assume_eqs;
@@ -2045,6 +2046,7 @@ public:
 
         case lp::lia_move::branch: {
             TRACE("arith", tout << "branch\n";);
+            ++m_stats.m_branches;
             app_ref b = mk_bound(m_lia->get_term(), m_lia->get_offset(), !m_lia->is_upper());
             if (m.has_trace_stream()) {
                 app_ref body(m);
@@ -3825,6 +3827,7 @@ public:
         st.update("arith-nla-explanations", m_stats.m_nla_explanations);
         st.update("arith-nla-lemmas", m_stats.m_nla_lemmas);
         st.update("arith-gomory-cuts", m_stats.m_gomory_cuts);
+        st.update("arith-branches", m_stats.m_branches);
         st.update("arith-assume-eqs", m_stats.m_assume_eqs);
     }        
 };
